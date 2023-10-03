@@ -1,0 +1,27 @@
+{
+  "baseUrl": ".",
+  "include": [
+    "./src/ts/**/*.ts",
+    "./src/ts/**/*.tsx",
+    "./src/custom.d.ts"
+  ],
+  "exclude": [
+    "**/*.test.ts"
+  ],
+
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es6",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "paths": {
+      "@wwwTs": [ "./src/ts" ],
+      "@wwwTs/*": [ "./src/ts/*" ],
+      "@wwwScss": ["./src/scss" ],
+      "@wwwScss/*": ["./src/scss/*" ]
+    },
+  },
+}
