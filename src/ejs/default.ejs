@@ -158,6 +158,12 @@
             'Name, Major:\n');
         document.getElementById('content').innerText = output;
       }
+
+      const declareGlobalLibReady = (globalVarName) => {
+        const fnName = `__declare_${globalVarName}_ready`
+        console.assert(globalThis[fnName], `${fnName} does not exist`)
+        globalThis[fnName]()
+      }
     </script>
-    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
-    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+    <script async defer src="https://apis.google.com/js/api.js" onload="declareGlobalLibReady('gapi')"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="declareGlobalLibReady('google.accounts.oauth2')"></script>

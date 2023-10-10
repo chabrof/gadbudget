@@ -66,6 +66,8 @@ const getWebPackConfig = (dirname, resolveAlias, extraPlugins = []) => {
         'process.env.PRODUCTION': 'false',
         'process.env.WWW_URL': `"${process.env.WWW_URL}"`,
         'process.env.WWW_VERSION': `"${process.env.WWW_VERSION}"`,
+        'process.env.GOOGLE_CLIENT_ID': `"${process.env.GOOGLE_CLIENT_ID}"`,
+        'process.env.GOOGLE_API_KEY': `"${process.env.GOOGLE_API_KEY}"`,
       }),
       new HtmlWebpackPlugin({
         filename: 'index.html',

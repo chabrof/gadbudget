@@ -3,7 +3,7 @@
   "include": [
     "./src/ts/**/*.ts",
     "./src/ts/**/*.tsx",
-    "./src/custom.d.ts"
+    "./src/types/googleAccount.d.ts"
   ],
   "exclude": [
     "**/*.test.ts"

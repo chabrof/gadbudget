@@ -89,16 +89,11 @@ const getWebPackConfig = (dirname, resolveAlias, extraPlugins = [], outputPath =
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
-        'process.env.SUPER_API_URL': `"${process.env.SUPER_API_URL}"`,
-        'process.env.BLOG_API_URL': `"${process.env.BLOG_API_URL}"`,
-        'process.env.STRAPI_URL': `"${process.env.STRAPI_URL}"`,
-        'process.env.BEARER_STRAPI_API': `"${process.env.BEARER_STRAPI_API}"`,
-        'process.env.MEDIA_URL': `"${process.env.MEDIA_URL}"`,
         'process.env.PRODUCTION': true,
-        'process.env.X_AUTH_TOKEN': `"${process.env.X_AUTH_TOKEN}"`,
-        'process.env.AUTH_URL': `"${process.env.AUTH_URL}"`,
         'process.env.WWW_URL': `"${process.env.WWW_URL}"`,
         'process.env.WWW_VERSION': `"${process.env.WWW_VERSION}"`,
+        'process.env.GOOGLE_CLIENT_ID': `"${process.env.GOOGLE_CLIENT_ID}"`,
+        'process.env.GOOGLE_API_KEY': `"${process.env.GOOGLE_API_KEY}"`,
       }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].css'

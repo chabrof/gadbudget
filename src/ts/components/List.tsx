@@ -1,4 +1,7 @@
 import * as React from 'react'
+import { loadLastItems } from '../apiCalls/loadLastItems'
+
+loadLastItems()
 
 export const List = () => {
   return (
