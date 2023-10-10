@@ -7,11 +7,13 @@ import { Footer } from './layouts/Footer'
 import { Middle } from './layouts/Middle'
 import { Header } from './layouts/Header'
 import { AddButton, List } from './List'
+import { signin } from '@wwwTs/apiCalls/googleAPILoading'
 
 function Home () {
   return (
     <>
       <Header />
+      <button onClick={() => signin()}>Click</button>
       <Middle content={
         <>
           <List />
