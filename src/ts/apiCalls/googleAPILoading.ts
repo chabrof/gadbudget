@@ -34,17 +34,27 @@ gapiPromise
       _gapiInited = true
       _maybeEnableGoogleAPI()
     }
-    gapi.load('client', asyncFn)
+    gapi.load('client', {
+      callback: asyncFn,
+      onerror: function() {
+        // Handle loading error.
+        console.error('gapi.client failed to load!')
+      },
+      timeout: 4000,
+      ontimeout: function () {
+        console.error('timeout')
+      }
+    })
   })
 
 let _signinResolve
 const _signinCbk = async (resp) => {
   if (resp.error !== undefined) {
+    console.error('connexion error', resp.error)
     throw (resp)
   }
   console.log('User has signed in')
   _signinResolve()
-  // await listMajors();
 }
 const _signinPromise = new Promise((resolve) => {
   _signinResolve = resolve
@@ -71,10 +81,13 @@ googleAccountPromise
     _tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
       scope: SCOPES,
-      callback: _signinCbk
+      callback: _signinCbk,
+
     })
+    console.log('tokenClient', _tokenClient)
     _gisInited = true
     _maybeEnableGoogleAPI()
   })
+  .catch(e => console.error('Error in GoogleAccount', e))
 
 export default promise

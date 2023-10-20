@@ -1,27 +1,25 @@
-import * as React from 'react'
+import React, { useEffect, useState } from 'react'
 import { loadLastItems } from '../apiCalls/loadLastItems'
 
-loadLastItems()
+export const LastWritings = () => {
 
-export const List = () => {
+  const [list, setList] = useState([])
+  useEffect(() => {
+    loadLastItems().then((res) => setList(res))
+  }, [])
+
   return (
     <table className="table">
       <tbody>
-        <tr>
-          <th scope="row">jeu 24 jul.</th>
-          <td>Boucher</td>
-          <td>24 €</td>
-        </tr>
-        <tr>
-          <th scope="row">sam 28 sep.</th>
-          <td>Courses</td>
-          <td>242 €</td>
-        </tr>
-        <tr>
-          <th scope="row">lun. 2 oct.</th>
-          <td>Courses</td>
-          <td>123,40 €</td>
-        </tr>
+        {
+          list.map((item, idx) =>
+            <tr key={idx}>
+              <th scope="row">{item[0]}</th>
+              <td>{item[1]}</td>
+              <td>{item[2]}</td>
+            </tr>
+          )
+        }
       </tbody>
     </table>
   )

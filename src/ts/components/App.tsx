@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Footer } from './layouts/Footer'
 import { Middle } from './layouts/Middle'
 import { Header } from './layouts/Header'
-import { AddButton, List } from './List'
+import { AddButton, LastWritings } from './LastWritings'
 import { signin } from '@wwwTs/apiCalls/googleAPILoading'
 
 function Home () {
@@ -16,7 +16,7 @@ function Home () {
       <button onClick={() => signin()}>Click</button>
       <Middle content={
         <>
-          <List />
+          <LastWritings />
           <AddButton />
         </>
       } />
@@ -57,7 +57,6 @@ export default function App () {
     <Routes>
       {/* <Route path="/" element={<Layout />}> */}
       <Route index element={<Home />} />
-      <Route path="index" element={<Home />} />
       <Route path="/404" element={<PageNotFound />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
