@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import { loadLastItems } from '../apiCalls/loadLastItems'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
 
-export const LastWritings = () => {
-
+export function LastWritings () {
   const [list, setList] = useState([])
   useEffect(() => {
     loadLastItems().then((res) => setList(res))
   }, [])
 
   return (
-    <table className="table">
-      <tbody>
-        {
-          list.map((item, idx) =>
-            <tr key={idx}>
-              <th scope="row">{item[0]}</th>
-              <td>{item[1]}</td>
-              <td>{item[2]}</td>
-            </tr>
-          )
-        }
-      </tbody>
-    </table>
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 350 }} size="small" aria-label="a dense table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="left">Date</TableCell>
+            <TableCell align="right">Prix</TableCell>
+            <TableCell align="right">Catégorie</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {list.map((row, idx) => (
+            <TableRow
+              key={idx}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell align="left">{row[0]}</TableCell>
+              <TableCell align="right">{row[1]}</TableCell>
+              <TableCell align="right">{row[2]}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   )
 }
 

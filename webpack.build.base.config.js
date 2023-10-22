@@ -77,7 +77,7 @@ const getWebPackConfig = (dirname, resolveAlias, extraPlugins = [], outputPath =
         {
           test: /\.(ttf|eot|woff|woff2|svg|webp)$/,
           use: {
-            loader: 'file-loader',
+            loader: ['url-loader', 'file-loader'],
             options: {
                 name: '[name].[ext]',
                 outputPath: 'fonts/'

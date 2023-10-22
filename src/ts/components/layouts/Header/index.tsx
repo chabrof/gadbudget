@@ -1,56 +1,105 @@
 import * as React from 'react'
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import CssBaseline from '@mui/material/CssBaseline'
+import Divider from '@mui/material/Divider'
+import Drawer from '@mui/material/Drawer'
+import IconButton from '@mui/material/IconButton'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemText from '@mui/material/ListItemText'
+import MenuIcon from '@mui/icons-material/Menu'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 
-export const Header = () => {
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window;
+}
+
+const drawerWidth = 240
+const navItems = ['Home', 'About', 'Contact']
+
+export function Header (props: Props) {
+  const { window } = props
+  const [mobileOpen, setMobileOpen] = React.useState(false)
+
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState)
+  }
+
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Gad' Budget
+      </Typography>
+      <Divider />
+      <List>
+        {navItems.map((item) => (
+          <ListItem key={item} disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <ListItemText primary={item} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  )
+
+  const container = window !== undefined ? () => window().document.body : undefined
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="#">Gad'Budget</a>
-        <button
-          className="navbar-toggler" type="button"
-          data-toggle="collapse" data-target="#navbarNavDropdown"
-          aria-controls="navbarNavDropdown"
-          aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav ml-auto ">
-            { /*<li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-expanded="false">
-                    EN
-                  </a>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <li>
-                      <h6 className="dropdown-header">Language</h6>
-                    </li>
-                    <li><a className="dropdown-item" href="#">SP</a></li>
-                    <li><a className="dropdown-item" href="#">FR</a></li>
-                    <li><a className="dropdown-item" href="#">DE</a></li>
-                  </ul>
-                </li> */
-            }
-            <li className="nav-item">
-              <a className="nav-link active" href="#">Saisie</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Visualisation</a>
-            </li>
-            <li className="nav-item dropdown ml-lg-3 ">
-              <a
-                className="nav-link dropdown-toggle text-light d-inline-block bg-orange rounded p-1 p-lg-2"
-                href="#" id="navbarDropdownMenuLink" role="button"
-                data-toggle="dropdown" aria-expanded="false">
-                <i className="fab fa-facebook-f white-text mx-2"> </i>
-              </a>
-              <ul className="dropdown-menu dropdown-menu-lg-right p-1 sign__container" aria-labelledby="navbarDropdownMenuLink">
-                <h1 className="h4 mb-3 font-weight-normal text-center">Please sign in</h1>
-                <label htmlFor="inputSheetId" className="sr-only">Google sheet id</label>
-                <input type="email" id="sheetId" className="form-control" placeholder="sheet id" />
-                <button className="btn btn-sm btn-outline-primary mt-2" type="submit">Enregistrer</button>
-              </ul>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <>
+      <CssBaseline />
+      <AppBar component="nav">
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: 'none' } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+          >
+            MUI
+          </Typography>
+          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            {navItems.map((item) => (
+              <Button key={item} sx={{ color: '#fff' }}>
+                {item}
+              </Button>
+            ))}
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <nav>
+        <Drawer
+          container={container}
+          variant="temporary"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true, // Better open performance on mobile.
+          }}
+          sx={{
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </nav>
+    </>
   )
 }

@@ -65,26 +65,28 @@ export const writeTest = () => {
   console.log('la')
 }
 
-
-export const createSheet  = () => {
-  try {
-    return (gapi.client as any).sheets.spreadsheets.batchUpdate({
-      spreadsheetId: '1L4mulEYdrYsD6xZ20NgS7vzxD7tK29joijHrVRK04JI',
-      requestBody: {
-        requests: [{
-          addSheet: {
-            properties: {
-              title: 'newTab',
-            }
+export const createSheet  = () =>
+  (gapi.client as any).sheets.spreadsheets.batchUpdate({
+    spreadsheetId: '1L4mulEYdrYsD6xZ20NgS7vzxD7tK29joijHrVRK04JI',
+    resource: {
+      requests: [{
+        addSheet: {
+          properties: {
+            title: 'newTab',
           }
-        }]
-      }
-    }).then((response) => {
-      const result = response.result
+        }
+      }]
+    }
+  })
+    .then((response) => {
+      const result = response.result.result
     })
-  } catch (err) {
-    console.error('err', err)
-    return
-  }
-  console.log('la')
-}
+    .catch(e => {
+      console.error('catche e', e)
+      const { status } = e
+      switch(status) {
+        case 400:
+          console.error('Erreur lors de la creation de la tab')
+          break
+      }
+    })

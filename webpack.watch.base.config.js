@@ -51,12 +51,22 @@ const getWebPackConfig = (dirname, resolveAlias, extraPlugins = []) => {
           ]
         },
         {
-          test: /\.(ttf|eot|woff|woff2|svg)$/,
+          test: /\.(ttf|eot|woff|woff2)$/,
           use: {
             loader: 'file-loader',
             options: {
                 name: '[name].[ext]',
-                outputPath: 'fonts/'
+                outputPath: 'fonts/',
+            },
+          }
+        },
+        {
+          test: /\.(svg|jpg|png|webp)$/,
+          use: {
+            loader: 'file-loader',
+            options: {
+                name: '[name].[ext]',
+                outputPath: 'img/',
             },
           }
         }
