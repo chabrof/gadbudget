@@ -3,6 +3,7 @@ import '../scss/main.scss'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import PageHelmet from './helmet/PageHelmet'
 import { Footer } from './layouts/Footer'
+import Container from '@mui/material/Container'
 import { Middle } from './layouts/Middle'
 import { Header } from './layouts/Header'
 import { AddButton, LastWritings } from './LastWritings'
@@ -26,6 +27,9 @@ function Home () {
       <Header />
       <Box component="main" sx={{ p: 3, background: 'url(img/bg.webp)', backgroundSize: '100% auto', height: '100%'   }}>
         <Toolbar />
+        <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
+          <LastWritings />
+        </Container>
         <Typography>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique unde
           fugit veniam eius, perspiciatis sunt? Corporis qui ducimus quibusdam,

@@ -7,7 +7,26 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-
+import TextField from '@mui/material/TextField'
+import InputAdornment from '@mui/material/InputAdornment'
+import MenuItem from '@mui/material/MenuItem'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+const categories = [
+  {
+    label: 'boulangerie',
+    value: 'boul'
+  },
+  {
+    label: 'boucher',
+    value: 'boucher',
+  },
+  {
+    label: 'supermarché',
+    value: 'supermarche'
+  }
+]
 export function LastWritings () {
   const [list, setList] = useState([])
   useEffect(() => {
@@ -15,29 +34,67 @@ export function LastWritings () {
   }, [])
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 350 }} size="small" aria-label="a dense table">
-        <TableHead>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 350 }} size="small" aria-label="a dense table">
+          {/*<TableHead>
           <TableRow>
             <TableCell align="left">Date</TableCell>
             <TableCell align="right">Prix</TableCell>
             <TableCell align="right">Catégorie</TableCell>
           </TableRow>
-        </TableHead>
-        <TableBody>
-          {list.map((row, idx) => (
+        </TableHead>*/}
+          <TableBody>
             <TableRow
-              key={idx}
+              key={-1}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="left">{row[0]}</TableCell>
-              <TableCell align="right">{row[1]}</TableCell>
-              <TableCell align="right">{row[2]}</TableCell>
+              <TableCell align="right">
+                <DatePicker slotProps={{ textField: { variant: 'standard' } }}/>
+              </TableCell>
+
+              <TableCell align="right">
+                <TextField
+                  label="Montant"
+                  id="filled-start-adornment"
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">€</InputAdornment>,
+                  }}
+                  variant="standard"
+                />
+              </TableCell>
+              <TableCell align="left">
+                <TextField
+                  id="standard-select-categ"
+                  select
+                  label="Catégorie"
+                  defaultValue="EUR"
+                  variant="standard"
+                  sx={{ minWidth: 60 }}
+                >
+                  {categories.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+
+              </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+            {list.map((row, idx) => (
+              <TableRow
+                key={idx}
+                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              >
+                <TableCell align="left">{row[0]}</TableCell>
+                <TableCell align="right">{row[1]}</TableCell>
+                <TableCell align="right">{row[2]}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </LocalizationProvider>
   )
 }
 
