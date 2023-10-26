@@ -1,6 +1,7 @@
 const path = require('path')
 const fs = require('fs')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // Load env vars in varisous .env files
 const dotenv = require('dotenv-flow')
@@ -10,6 +11,13 @@ dotenv.config()
 const dirName = __dirname
 
 const extraPlugins = [
+  new HtmlWebpackPlugin({
+    filename: 'index.html',
+    template: path.resolve('src/ejs/', 'default.ejs'),
+    inject: false,
+    hash: true,
+    title: 'Gad\'Budget'
+  }),
   new CopyWebpackPlugin({
     patterns: [
       { from: 'assets' },
