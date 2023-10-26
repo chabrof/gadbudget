@@ -10,21 +10,43 @@ dotenv.config()
 const dirName = __dirname
 
 const extraPlugins = [
-  /* new StatsWriterPlugin({
-    filename: path.join(__dirname, './webpack-stats.json'),
-    stats: {
-      assets: true,
-      chunks: true,
-      modules: true
-    }
-  }), */
   new CopyWebpackPlugin({
     patterns: [
       { from: 'assets' },
       // { from: 'config/pages.json' }
     ]
   }),
-  {
+  /*{ // Removing unused chunks after emit
+    apply: (compiler) => {
+      // Called after emitting assets to output directory
+      compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+        const CHUNKS_FOLDER = 'static/ui/js/chunks/';
+        // List of used chunks
+        const chunks = compilation.chunks.map(
+          chunk => chunk.files[0]
+        ).filter(
+          chunk => chunk.startsWith(CHUNKS_FOLDER)
+        ).map(
+          chunk => chunk.slice(CHUNKS_FOLDER.length)
+        )
+
+        // Substring to exclude used chunks
+        const chunksExcludingSubstr = chunks.map(
+          chunk => `-not -name ${chunk}`
+        ).join(' ')
+
+        exec(
+          `find ${CHUNKS_FOLDER} -type f ${chunksExcludingSubstr} -delete`,
+          (err, stdout, stderr) =>
+          {
+            if (stderr) process.stderr.write(stderr);
+          }
+        );
+      });
+    }
+  }*/
+  // new CleanObsoleteChunks()
+  /*{
     apply: compiler => { // We create a dummy plugin with hooks on the 'done' event in order to extract generated files
       compiler.hooks.done.tap("My-FinalizePlugin", stats => {
         // Extract JS and CSS file names (for late SSG Generation)
@@ -61,7 +83,7 @@ const extraPlugins = [
         fs.writeFileSync(`${dir}/gen-chunks.json`, data)
       })
     }
-  }
+  }*/
 ]
 const resolveAlias = {
   '@wwwTs': path.join(__dirname, './src/ts'),
@@ -69,6 +91,6 @@ const resolveAlias = {
 }
 
 const getWebPackConfig = require('./webpack.build.base.config')
-const config = getWebPackConfig(dirName, resolveAlias, extraPlugins)
+const config = getWebPackConfig(dirName, resolveAlias, extraPlugins, dirName + '/public')
 
 module.exports = config

@@ -50,7 +50,7 @@ export function LastWritings () {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="right">
-                <DatePicker slotProps={{ textField: { variant: 'standard' } }}/>
+                <DatePicker label="Date" slotProps={{ textField: { variant: 'standard' } }}/>
               </TableCell>
 
               <TableCell align="right">

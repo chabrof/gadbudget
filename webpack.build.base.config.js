@@ -7,31 +7,55 @@ if (!process.env.NODE_ENV) {
   throw "no NODE_ENV env variable"
 }
 
-if (!process.env.GEN_DIR) {
-  throw "no GEN_DIR env variable : the directory where we will generate the WebSite (all html, css and js files)."
-}
-
 console.log(`//// Build for ${process.env.NODE_ENV} environment ////`)
 const getWebPackConfig = (dirname, resolveAlias, extraPlugins = [], outputPath = null) => {
+  if (!outputPath && !process.env.GEN_DIR) {
+    throw "no GEN_DIR env variable : the directory where we will generate the WebSite (all html, css and js files)."
+  }
   const config = {
     optimization: {
       runtimeChunk: 'single',
       usedExports: true,
       minimize: true,
-      splitChunks: {
-        cacheGroups: {
-          vendor: {
+      splitChunks:
+        {
+          minSize: 17000,
+          minRemainingSize: 0,
+          minChunks: 1,
+          maxAsyncRequests: 30,
+          maxInitialRequests: 30,
+          automaticNameDelimiter: "_",
+          enforceSizeThreshold: 30000,
+          cacheGroups: {
+           common: {
             test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all'
-          },
-          default: {
+            priority: -5,
+            reuseExistingChunk: true,
+            chunks: "initial",
+            name: "vendor_common",
+            minSize: 0,
+           },
+           default: {
             minChunks: 2,
             priority: -20,
             reuseExistingChunk: true,
-          }
-        }
-      }
+           },
+           // we are opting out of defaultVendors, so rest of the node modules will be part of default cacheGroup
+           defaultVendors: false,
+           reactPackage: {
+            test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom)[\\/]/,
+            name: 'vendor_react',
+            chunks: "all",
+            priority: 10,
+           },
+           finalFormPackage: {
+            test: /[\\/]node_modules[\\/](final-form|react-final-form)[\\/]/,
+            name: 'vendor_finalform',
+            chunks: "all",
+            priority: 10,
+           }
+          },
+         },
     },
     output: {
       filename: '[name].[chunkhash].bundle.js',
@@ -75,12 +99,22 @@ const getWebPackConfig = (dirname, resolveAlias, extraPlugins = [], outputPath =
           use: [MiniCssExtractPlugin.loader, 'css-loader'],
         },
         {
-          test: /\.(ttf|eot|woff|woff2|svg|webp)$/,
+          test: /\.(ttf|eot|woff|woff2)$/,
           use: {
-            loader: ['url-loader', 'file-loader'],
+            loader: 'file-loader',
             options: {
                 name: '[name].[ext]',
                 outputPath: 'fonts/'
+            },
+          }
+        },
+        {
+          test: /\.(svg|jpg|png|webp)$/,
+          use: {
+            loader: 'file-loader',
+            options: {
+                name: '[name].[ext]',
+                outputPath: 'img/',
             },
           }
         }
