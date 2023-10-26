@@ -36,7 +36,7 @@ export function LastWritings () {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 350 }} size="small" aria-label="a dense table">
+        <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
           {/*<TableHead>
           <TableRow>
             <TableCell align="left">Date</TableCell>
