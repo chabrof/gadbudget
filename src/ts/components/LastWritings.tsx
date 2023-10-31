@@ -40,7 +40,7 @@ export function LastWritings () {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 350 }} size="small" aria-label="a dense table">
+        <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
           {/*<TableHead>
           <TableRow>
             <TableCell align="left">Date</TableCell>
@@ -54,10 +54,11 @@ export function LastWritings () {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="left">
-                <DatePicker slotProps={{ textField: { variant: 'standard' } }}/>
+
+                <DatePicker label="Date" slotProps={{ textField: { variant: 'standard' } }}/>
               </TableCell>
 
-              <TableCell align="right">
+              <TableCell align="left">
                 <TextField
                   label="Montant"
                   id="filled-start-adornment"
@@ -91,7 +92,7 @@ export function LastWritings () {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
                 <TableCell align="left">{row[0]}</TableCell>
-                <TableCell align="right">{row[1]}</TableCell>
+                <TableCell align="left">{row[1]}</TableCell>
                 <TableCell align="right">{row[2]}</TableCell>
               </TableRow>
             ))}
