@@ -29,9 +29,13 @@ const categories = [
 ]
 export function LastWritings () {
   const [list, setList] = useState([])
-  useEffect(() => {
-    loadLastItems().then((res) => setList(res))
-  }, [])
+
+  /* useEffect(() => {
+    loadLastItems().then((res) => {
+      console.log('list', list)
+      setList(res)
+    })
+  }, [])*/
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -49,7 +53,7 @@ export function LastWritings () {
               key={-1}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell align="right">
+              <TableCell align="left">
                 <DatePicker slotProps={{ textField: { variant: 'standard' } }}/>
               </TableCell>
 
@@ -63,12 +67,12 @@ export function LastWritings () {
                   variant="standard"
                 />
               </TableCell>
-              <TableCell align="left">
+              <TableCell align="right">
                 <TextField
                   id="standard-select-categ"
                   select
                   label="Catégorie"
-                  defaultValue="EUR"
+                  defaultValue="boul"
                   variant="standard"
                   sx={{ minWidth: 60 }}
                 >

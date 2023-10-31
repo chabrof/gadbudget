@@ -25,7 +25,7 @@ function Home () {
   return (
     <Box sx={{ display: 'flex', height: '100%' }}>
       <Header />
-      <Box component="main" sx={{ p: 3, background: 'url(img/bg.webp)', backgroundSize: '100% auto', height: '100%'   }}>
+      <Box component="main" sx={{ p: 3, background: 'url(img/bg.webp)', backgroundSize: 'cover', height: '100%'   }}>
         <Toolbar />
         <Container maxWidth="md" sx={{ mt: 4, mb: 4 }}>
           <LastWritings />

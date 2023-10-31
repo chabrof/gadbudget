@@ -13,6 +13,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
+import Link from '@mui/material/Link'
 
 interface Props {
   /**
@@ -23,7 +24,16 @@ interface Props {
 }
 
 const drawerWidth = 240
-const navItems = ['Home', 'About', 'Contact']
+const navItems = [
+  {
+    label: 'Saisie',
+    href:'/',
+  },
+  {
+    label: 'Vue',
+    href:'/vue'
+  }
+]
 
 export function Header (props: Props) {
   const { window } = props
@@ -36,14 +46,14 @@ export function Header (props: Props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Gad' Budget
+        {'Gad\' Budget'}
       </Typography>
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+          <ListItem key={item.label} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={item} />
+              <ListItemText primary={<Link href={item.href}>{item.label}</Link>} />
             </ListItemButton>
           </ListItem>
         ))}
@@ -72,13 +82,13 @@ export function Header (props: Props) {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            {'Gad\' Budget'}
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item} sx={{ color: '#fff' }}>
-                {item}
-              </Button>
+              <Link key={item.label} href={item.href} sx={{ color: '#fff' }}>
+                {item.label}
+              </Link>
             ))}
           </Box>
         </Toolbar>

@@ -1,4 +1,3 @@
-
 export const loadLastItems = async (): Promise<any[]> => {
   let response
   try {
@@ -18,6 +17,27 @@ export const loadLastItems = async (): Promise<any[]> => {
   }
   console.log('out', range)
   return range.values
+}
+let sheetH
+export const getSpshInfos = async (): Promise<any[]> => {
+  let response
+  try {
+    // Fetch first 10 files
+    response = await (gapi.client as any).sheets.spreadsheets.get({
+      spreadsheetId: '1L4mulEYdrYsD6xZ20NgS7vzxD7tK29joijHrVRK04JI',
+    })
+  } catch (err) {
+    console.error(err)
+    return
+  }
+  const result = response.result
+
+  sheetH = result.sheets.reduce((acc, sheet) => {
+    acc[sheet.properties.title] = sheet
+    return acc
+  }, {})
+  console.log('Spsh details', result)
+  return result
 }
 
 export const appendLine = async (): Promise<any[]> => {
@@ -90,3 +110,40 @@ export const createSheet  = () =>
           break
       }
     })
+
+export const deleteLine  = () =>{
+  const sheetDscr = sheetH['main']
+
+  return (gapi.client as any).sheets.spreadsheets
+    .batchUpdate({
+      spreadsheetId: '1L4mulEYdrYsD6xZ20NgS7vzxD7tK29joijHrVRK04JI',
+      resource: {
+        requests: [{
+          deleteDimension: {
+            'range': {
+              'sheetId': sheetDscr['sheetId'],
+              'dimension': 'ROWS',
+              'startIndex': 5,
+              'endIndex': 15
+            }
+          }
+        }]
+      }
+    })
+    .then((response) => {
+      const result = response.result.result
+    })
+    .catch(e => {
+      console.error('catche e', e)
+      const { status } = e
+      switch(status) {
+        case 400:
+          console.error('Erreur lors de la creation de la tab')
+          break
+      }
+    })
+}
+
+export const getSheetIdWithName = () =>
+  (gapi.client as any).sheets.spreadsheets
+    .getSheets()

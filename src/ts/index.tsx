@@ -5,7 +5,7 @@ import { store } from './store'
 import { Provider } from 'react-redux'
 import App from './components/App'
 import GoogleLoadingPromise, { signin } from './apiCalls/googleAPILoading'
-import { writeTest, appendLine, createSheet } from './apiCalls/loadLastItems'
+import { writeTest, getSpshInfos, appendLine, deleteLine, createSheet } from './apiCalls/loadLastItems'
 
 console.log(`Mode ${process.env.PRODUCTION ? 'Production' : 'Development'}`)
 
@@ -24,8 +24,10 @@ GoogleLoadingPromise.then(
       const root = createRoot(document.getElementById('root'))
       root.render(mainComponent)
       writeTest()
-        .then(() => appendLine())
-        .then(() => createSheet())
+        //.then(() => appendLine())
+        .then(() => getSpshInfos())
+        //.then(() => deleteLine())
+        //.then(() => createSheet())
       console.log('App starting')
     }).catch(e => console.error(e))
   })
