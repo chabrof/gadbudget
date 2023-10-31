@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import fetchesReducer from './fetchesSlice'
+import errorsReducer from './errorsSlice'
 
 const storeConfig = {
   reducer: {
     fetches: fetchesReducer,
+    errors: errorsReducer
   }
 }
 

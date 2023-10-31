@@ -1,6 +1,5 @@
 import React, { lazy, Suspense, useEffect } from 'react'
 import '../scss/main.scss'
-import { Routes, Route, Navigate } from 'react-router-dom'
 import PageHelmet from './helmet/PageHelmet'
 import { Footer } from './layouts/Footer'
 import Container from '@mui/material/Container'
@@ -12,7 +11,10 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import '../../img/bg.webp'
-
+import { RouterProvider, Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
+import { GoogleConnectBox } from '@wwwTs/components/GoogleConnectBox'
+import MainLayout from '@wwwTs/components/layouts/MainLayout'
+import { Error } from './ErrorCpt'
 /*
 Middle content={
         <>
@@ -21,13 +23,13 @@ Middle content={
         </>
       } />
       */
-function Home () {
+function Home() {
   return (
     <Box sx={{ display: 'flex', height: '100%' }}>
       <Header />
-      <Box component="main" sx={{ p: 3, background: 'url(img/bg.webp)', backgroundSize: 'cover', height: '100%'   }}>
+      <Box component="main" sx={{ p: 3, background: 'url(img/bg.webp)', backgroundSize: 'cover', height: '100%' }}>
         <Toolbar />
-        <Container maxWidth="md" sx={{ mt: 4, mb: 4, pl:0, pr: 0 }}>
+        <Container maxWidth="md" sx={{ mt: 4, mb: 4, pl: 0, pr: 0 }}>
           <LastWritings />
         </Container>
         <Typography>
@@ -69,7 +71,7 @@ function Home () {
   )
 }
 
-function PageNotFound () {
+function PageNotFound() {
   return (
     <>
       <PageHelmet
@@ -95,14 +97,16 @@ function PageNotFound () {
 }
 
 
-export default function App () {
-  console.log('le console log fonctionne')
-  return (
-    <Routes>
-      {/* <Route path="/" element={<Layout />}> */}
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<MainLayout header={<Header />} footer={<Footer />} ErrorCpt={Error} />}>
       <Route index element={<Home />} />
-      <Route path="/404" element={<PageNotFound />} />
+      <Route path="connexion" element={<GoogleConnectBox />} />
       <Route path="*" element={<PageNotFound />} />
-    </Routes>
+    </Route>
   )
+)
+
+export default function App() {
+  return <RouterProvider router={router} />
 }

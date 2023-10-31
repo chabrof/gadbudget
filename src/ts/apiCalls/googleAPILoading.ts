@@ -22,11 +22,10 @@ const _maybeEnableGoogleAPI = () => {
   }
 }
 
-const gapiPromise = getGapiPromise()
-gapiPromise
+export const gapiPromise = getGapiPromise()
   .then(() => console.log('Gapi is ready !', gapi))
   .then(() => {
-    async function asyncFn () {
+    async function asyncFn() {
       await gapi.client.init({
         apiKey: API_KEY,
         discoveryDocs: [DISCOVERY_DOC],
@@ -36,7 +35,7 @@ gapiPromise
     }
     gapi.load('client', {
       callback: asyncFn,
-      onerror: function() {
+      onerror: function () {
         // Handle loading error.
         console.error('gapi.client failed to load!')
       },
@@ -68,7 +67,7 @@ export const signin = () => {
     _tokenClient.requestAccessToken(/*{prompt: 'consent'}*/)
   } else {
     // Skip display of account chooser and consent dialog for an existing session.
-    _tokenClient.requestAccessToken({prompt: ''})
+    _tokenClient.requestAccessToken({ prompt: '' })
   }
 
   return _signinPromise
