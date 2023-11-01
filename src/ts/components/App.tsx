@@ -60,7 +60,6 @@ function PageNotFound () {
   )
 }
 
-
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout header={<Header />} footer={<Footer />} ErrorCpt={Error} />}>

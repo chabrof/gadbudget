@@ -20,6 +20,7 @@ const Splash = () => <h1>Gad Budget</h1>
 
 const MainComponent = () => {
   const dispatch = useDispatch()
+
   const [gapiLoaded, setGapiLoaded] = useState(false)
   const onGapiLoadedCbk = useCallback(() => setGapiLoaded(true), [])
   const onGapiLoadErrorCbk = useCallback(
