@@ -22,28 +22,42 @@ const _maybeEnableGoogleAPI = () => {
   }
 }
 
+export const gapiPostInit = () => {
+  let _resolve, _reject
+  const promise = new Promise((resolve, reject) => {
+    _resolve = resolve
+    _reject = reject
+  })
+
+  async function asyncFn () {
+    await gapi.client.init({
+      apiKey: API_KEY,
+      discoveryDocs: [DISCOVERY_DOC],
+    })
+    _gapiInited = true
+    _resolve()
+  }
+
+  gapi.load('client', {
+    callback: asyncFn,
+    onerror: function () {
+      // Handle loading error.
+      console.error('gapi.client failed to load!')
+    },
+    timeout: 4000,
+    ontimeout: function () {
+      console.error('timeout')
+      _reject()
+    }
+  })
+
+  return promise
+}
+
 export const gapiPromise = getGapiPromise()
   .then(() => console.log('Gapi is ready !', gapi))
   .then(() => {
-    async function asyncFn() {
-      await gapi.client.init({
-        apiKey: API_KEY,
-        discoveryDocs: [DISCOVERY_DOC],
-      })
-      _gapiInited = true
-      _maybeEnableGoogleAPI()
-    }
-    gapi.load('client', {
-      callback: asyncFn,
-      onerror: function () {
-        // Handle loading error.
-        console.error('gapi.client failed to load!')
-      },
-      timeout: 4000,
-      ontimeout: function () {
-        console.error('timeout')
-      }
-    })
+
   })
 
 let _signinResolve

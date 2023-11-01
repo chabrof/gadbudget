@@ -4,7 +4,7 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
+// import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+
 const categories = [
   {
     label: 'boulangerie',
@@ -30,12 +31,12 @@ const categories = [
 export function LastWritings () {
   const [list, setList] = useState([])
 
-  /* useEffect(() => {
+  useEffect(() => {
     loadLastItems().then((res) => {
       console.log('list', list)
       setList(res)
     })
-  }, [])*/
+  }, [])
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -54,7 +55,6 @@ export function LastWritings () {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell align="left">
-
                 <DatePicker label="Date" slotProps={{ textField: { variant: 'standard' } }}/>
               </TableCell>
 

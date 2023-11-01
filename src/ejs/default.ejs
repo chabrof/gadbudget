@@ -11,7 +11,7 @@
   <meta http-equiv="distribution" content="global" />
   <meta http-equiv="imagetoolbar" content="no" />
   <meta name="author" content="desbrasenplus.com" />
-  <link rel="shortcut icon" href="/img/favicon.ico" />
+  <link rel="icon" type="image/svg" href="/img/piggy-bank-solid.svg" />
   <% for (var idx in htmlWebpackPlugin.files.css) { %>
     <link href="/<%= htmlWebpackPlugin.files.css[idx] %>" rel="stylesheet" />
     <% } %>
@@ -32,7 +32,6 @@
 
 <body>
   <div id="root">
-
     <h1>Gad Budget</h1>
 
   </div>
@@ -40,12 +39,12 @@
     <script src="/<%= htmlWebpackPlugin.files.js[idx] %>"></script>
     <% } %>
 
-      <script type="text/javascript">
+      <!--<script type="text/javascript">
         const declareGlobalLibReady = (globalVarName) => {
           const fnName = `__declare_${globalVarName}_ready`
           console.assert(globalThis[fnName], `${fnName} does not exist`)
           globalThis[fnName]()
         }
-      </script>
-      <script async defer src="https://apis.google.com/js/api.js" onload="declareGlobalLibReady('gapi')"></script>
+      </script>-->
+      <!--<script async defer src="https://apis.google.com/js/api.js" onload="declareGlobalLibReady('gapi')"></script>-->
       <!--<script async defer src="https://accounts.google.com/gsi/client" onload="declareGlobalLibReady('google.accounts.oauth2')"></script>-->

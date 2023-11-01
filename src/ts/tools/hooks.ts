@@ -1,11 +1,11 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 
 type Options = {
   threshold: number,
   onStart: (any) => any,
   onFinish: (any) => any,
   onCancel: (any) => any
-}|undefined
+} | undefined
 
 function isTouchEvent ({ nativeEvent }) {
   return window.TouchEvent
@@ -79,4 +79,27 @@ export function useLongPress (callback, options: Options) {
       ...touchHandlers,
     }
   }, [callback, threshold, onCancel, onFinish, onStart])
+}
+
+export const identity = (arg) => arg
+
+export function useLoadExtScript (
+  url: string,
+  onLoadCbk: any,
+  onErrorCbk: any = identity,
+  postLoadingCbk): void {
+  useEffect(() => {
+    const scriptTag = document.createElement('script')
+    scriptTag.src = url
+    scriptTag.async = true
+    scriptTag.defer = true
+    scriptTag.onload = () => postLoadingCbk().then(() => onLoadCbk())
+    scriptTag.onerror = onErrorCbk
+
+    document.body.appendChild(scriptTag)
+
+    return () => {
+      document.body.removeChild(scriptTag)
+    }
+  }, [])
 }
