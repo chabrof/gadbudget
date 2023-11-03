@@ -7,8 +7,8 @@ export const loadLastItems = async (): Promise<any[]> => {
       range: 'main!A2:C2',
     })
   } catch (err) {
-    console.error(err)
-    return
+    console.error('error', err)
+    throw err
   }
   const range = response.result
   if (!range || !range.values || range.values.length == 0) {

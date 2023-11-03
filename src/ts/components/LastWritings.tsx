@@ -32,10 +32,18 @@ export function LastWritings () {
   const [list, setList] = useState([])
 
   useEffect(() => {
-    loadLastItems().then((res) => {
-      console.log('list', list)
-      setList(res)
-    })
+    loadLastItems()
+      .then((res) => {
+        console.log('list', list)
+        setList(res)
+      })
+      .catch(err => {
+        const errorCode = err?.result?.error?.code
+        if (errorCode === 403) {
+          // No permission
+        }
+        console.log(err?.result?.error?.code)
+      })
   }, [])
 
   return (
